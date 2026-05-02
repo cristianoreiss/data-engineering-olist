@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from include.extract_and_load import extract_and_load
 from airflow.sdk import Asset, dag, task
 from pendulum import datetime
@@ -6,11 +6,11 @@ from pendulum import datetime
 @dag(
     start_date = datetime(2026, 5, 1, 9),
     schedule = "@daily",
-    default_args=(
+    default_args={
         "owner":"Cristiano",
         "retries": 2,
         "retry_delay": timedelta(minutes=5)
-    ),
+    },
     catchup=False
 )
 def pipeline_olist():

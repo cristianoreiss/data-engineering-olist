@@ -1,45 +1,29 @@
-Overview
-========
+# 🛒 Olist Data Engineering Project
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+Este projeto implementa um pipeline completo de engenharia de dados utilizando o dataset público da Olist, um e-commerce brasileiro. O objetivo é construir um fluxo de ingestão, transformação e disponibilização de dados, seguindo boas práticas de modelagem e orquestração, para auxiliar nas análises de negócio.
 
-Project Contents
-================
+## 🏗️ Arquitetura do Pipeline de Dados
 
-Your Astro project contains the following files and folders:
+<p align="center">
+  <img src="images/diagrama-olist.drawio.png" alt="Arquitetura do Pipeline de Dados" width="700"/>
+</p>
 
-- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes one example DAG:
-    - `example_astronauts`: This DAG shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The DAG uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut. For more on how this DAG works, see our [Getting started tutorial](https://www.astronomer.io/docs/learn/get-started-with-airflow).
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
+<p align="center">
+  Diagrama da arquitetura mostrando ingestão, transformação e consumo dos dados.
+</p>
 
-Deploy Your Project Locally
-===========================
+O pipeline implementa um fluxo completo de engenharia de dados, desde a ingestão até a camada de análise:
 
-Start Airflow on your local machine by running 'astro dev start'.
+- **Fonte de Dados:** Foi utilizado o dataset público da empresa de e-commerce brasileira Olist, disponível no Kaggle: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
+- **Ingestão e Orquestração:** O Apache Airflow executa DAGs responsáveis por extrair os dados do dataset Olist (em formato CSV) e carregá-los no PostgreSQL (camada raw).
+- **Transformação:** O dbt organiza os dados em camadas (staging e marts), aplicando modelagem analítica.
+- **Infraestrutura:** Todo o ambiente é conteinerizado com Docker Compose.
+- **Consumo:** Os dados transformados são utilizados no Power BI para criação de dashboards analíticos.
 
-This command will spin up five Docker containers on your machine, each for a different Airflow component:
+# 🛠️ Ferramentas Usadas
 
-- Postgres: Airflow's Metadata Database
-- Scheduler: The Airflow component responsible for monitoring and triggering tasks
-- DAG Processor: The Airflow component responsible for parsing DAGs
-- API Server: The Airflow component responsible for serving the Airflow UI and API
-- Triggerer: The Airflow component responsible for triggering deferred tasks
-
-When all five containers are ready the command will open the browser to the Airflow UI at http://localhost:8080/. You should also be able to access your Postgres Database at 'localhost:5432/postgres' with username 'postgres' and password 'postgres'.
-
-Note: If you already have either of the above ports allocated, you can either [stop your existing Docker containers or change the port](https://www.astronomer.io/docs/astro/cli/troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).
-
-Deploy Your Project to Astronomer
-=================================
-
-If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://www.astronomer.io/docs/astro/deploy-code/
-
-Contact
-=======
-
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
+- **Apache Airflow:** Orquestração do pipeline por meio de DAGs.
+- **PostgreSQL:** Armazenamento dos dados nas camadas raw e analítica.
+- **dbt:** Transformação e modelagem dos dados em camadas (staging e marts).
+- **Docker Compose:** Conteinerização e gerenciamento do ambiente.
+- **Power BI:** Visualização dos dados por meio de dashboards analíticos.
