@@ -11,7 +11,8 @@ from pendulum import datetime
         "retries": 2,
         "retry_delay": timedelta(minutes=5)
     },
-    catchup=False
+    catchup=False,
+    tags=['olist']
 )
 def pipeline_olist():
 

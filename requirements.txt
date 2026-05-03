@@ -2,3 +2,5 @@ pendulum
 pandas
 sqlalchemy
 python-dotenv
+dbt-core
+dbt-postgres

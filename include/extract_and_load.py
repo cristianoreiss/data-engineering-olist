@@ -9,7 +9,7 @@ load_dotenv()
 postgres_host = os.getenv("DB_URL")
 
 def extract_and_load(nome_tabela):
-    path = f'/usr/local/datasets/{nome_tabela}.csv'
+    path = f'/opt/airflow/datasets/olist_customers_dataset.csv'
     df = pd.read_csv(path)
 
     engine = create_engine(postgres_host)
